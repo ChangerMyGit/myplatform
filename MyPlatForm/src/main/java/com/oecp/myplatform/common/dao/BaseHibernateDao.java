@@ -3,6 +3,8 @@ package com.oecp.myplatform.common.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.MappedSuperclass;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Changer
  *
  */
+@MappedSuperclass
 public abstract class BaseHibernateDao {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -26,7 +29,7 @@ public abstract class BaseHibernateDao {
 	}
 
 	public <T> void create(T entity) {
-		getHibernateSession().persist(entity);
+		getHibernateSession().save(entity);
 	}
 
 	public <T> void createBatch(List<T> entitys) {

@@ -3,11 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!-- 加载配置属性文件 -->
 	<context:property-placeholder
@@ -60,6 +62,27 @@
         <property name="sessionFactory" ref="sessionFactory"/>  
     </bean> 
     
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/> 
+    <!-- 配置那些类的方法进行事务管理,需要aopalliance-1.0.jar和aspectjweaver.jar，当前com.oecp.myplatform.service包中的子包，  
+                       类中所有方法需要，还需要参考tx:advice的设置 --> 
+	<!-- 需要引入tx的命名空间 -->
+	<!-- 这是事务通知操作，使用的事务管理器引用自 transactionManager -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 指定哪些方法需要加入事务，这里懒惰一下全部加入，可以使用通配符来只加入需要的方法 -->
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice> 
 	
+    <aop:config> 
+        <!-- 切入点指明了在执行Service的所有方法时产生事务拦截操作 --> 
+        <aop:pointcut id="daoMethods" expression="execution(* com.oecp.myplatform.service.*.*(..))" /> 
+        <!-- 定义了将采用何种拦截操作，这里引用到 txAdvice -->  
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="daoMethods" /> 
+    </aop:config>	
 </beans>

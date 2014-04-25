@@ -1,10 +1,12 @@
 package com.oecp.myplatform.common.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,13 +17,18 @@ import org.hibernate.annotations.GenericGenerator;
  * @author Changer
  * 
  */
+@MappedSuperclass
 public class StringPKEO implements Serializable {
 	private static final long serialVersionUID = 7866017096562639786L;
-	
+
 	private String id;// 业务实体的主键，采用hibernate的UUID的生成策略
 
+	private String creater;
+	
+	private String updater;
+	
 	@Id
-	@Column(name = "pk", length = 20)
+	@Column(name = "pk", length = 200)
 	@GeneratedValue(generator = "string16")
 	@GenericGenerator(strategy = "org.hibernate.id.UUIDHexGenerator", name = "string16")
 	public String getId() {
@@ -33,5 +40,35 @@ public class StringPKEO implements Serializable {
 			id = null;
 		}
 		this.id = id;
+	}
+
+	/**
+	 * @return the creater
+	 */
+	public String getCreater() {
+		return creater;
+	}
+
+	/**
+	 * @param creater
+	 *            the creater to set
+	 */
+	public void setCreater(String creater) {
+		this.creater = creater;
+	}
+
+	/**
+	 * @return the updater
+	 */
+	public String getUpdater() {
+		return updater;
+	}
+
+	/**
+	 * @param updater
+	 *            the updater to set
+	 */
+	public void setUpdater(String updater) {
+		this.updater = updater;
 	}
 }

@@ -1,4 +1,4 @@
-package com.oecp.myplatformcommon.web;
+package com.oecp.myplatform.common.web;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
