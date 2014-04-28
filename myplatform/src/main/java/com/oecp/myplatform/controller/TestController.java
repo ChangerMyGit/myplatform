@@ -1,34 +1,32 @@
 package com.oecp.myplatform.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.oecp.myplatform.common.controller.BaseController;
+import com.alibaba.fastjson.JSON;
+import com.oecp.myplatform.common.web.BaseController;
 import com.oecp.myplatform.model.User;
 import com.oecp.myplatform.service.UserService;
 
 @Controller
-@RequestMapping("/testAction")
+@RequestMapping("/testDao")
 public class TestController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/save", method = RequestMethod.GET ,produces="text/plain;charset=UTF-8") 
+	@RequestMapping(value = "/save", method = RequestMethod.GET) 
 	@ResponseBody
 	public String saveTest() {
     	User user1 = new User();
-    	user1.setName("中文名字HelloUTF");
-    	user1.setCreater("创建人UTF");
-    	user1.setUpdater("更新人UTF");
+    	user1.setName("testTX");
+    	user1.setCreater("testTX");
+    	user1.setUpdater("testTX");
     	userService.create(user1);
-		return this.toJson(user1);
+		return JSON.toJSONString(user1);
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET) 
@@ -61,25 +59,5 @@ public class TestController extends BaseController {
     	user2.setUpdater("testTX22");
     	userService.testTx(user1, user2);
     	return "Tx Success!";
-	}
-	
-	@RequestMapping(value = "/deleteWhere", method = RequestMethod.GET) 
-	@ResponseBody
-	public String testDeleteWhere(){
-		List params = new ArrayList();
-		params.add("创建人");
-		params.add("更新人");
-		userService.deleteByCondition(" o.creater = ? and o.updater = ? ", params);
-		return "DeleteWhere Success!";
-	}
-	
-	@RequestMapping(value = "/findWhere", method = RequestMethod.GET,produces="text/plain;charset=UTF-8") 
-	@ResponseBody
-	public String testFindByWhere(){
-		List params = new ArrayList();
-		params.add("%创建人%");
-		params.add("%更新人%");
-		List result = userService.findByCondition(" o.creater like ? and o.updater like ? ", params,0,100);
-		return this.toJson(result);
 	}
 }
