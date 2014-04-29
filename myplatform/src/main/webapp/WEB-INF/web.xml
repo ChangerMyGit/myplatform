@@ -59,4 +59,8 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+	<!-- Session 配置 -->
+	<session-config>
+		<session-timeout>10</session-timeout>
+	</session-config>
 </web-app>

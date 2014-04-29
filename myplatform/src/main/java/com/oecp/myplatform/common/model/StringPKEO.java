@@ -22,10 +22,6 @@ public class StringPKEO implements Serializable {
 	private static final long serialVersionUID = 7866017096562639786L;
 
 	private String id;// 业务实体的主键，采用hibernate的UUID的生成策略
-
-	private String creater;
-	
-	private String updater;
 	
 	@Id
 	@Column(name = "pk", length = 200)
@@ -42,33 +38,4 @@ public class StringPKEO implements Serializable {
 		this.id = id;
 	}
 
-	/**
-	 * @return the creater
-	 */
-	public String getCreater() {
-		return creater;
-	}
-
-	/**
-	 * @param creater
-	 *            the creater to set
-	 */
-	public void setCreater(String creater) {
-		this.creater = creater;
-	}
-
-	/**
-	 * @return the updater
-	 */
-	public String getUpdater() {
-		return updater;
-	}
-
-	/**
-	 * @param updater
-	 *            the updater to set
-	 */
-	public void setUpdater(String updater) {
-		this.updater = updater;
-	}
 }

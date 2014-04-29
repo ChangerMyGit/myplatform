@@ -1,6 +1,7 @@
 package com.oecp.myplatform.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,11 @@ public class TestController extends BaseController {
 	@ResponseBody
 	public String saveTest() {
 		User user1 = new User();
-		user1.setName("中文名字HelloUTF");
-		user1.setCreater("创建人UTF");
-		user1.setUpdater("更新人UTF");
+		user1.setName("添加了日期");
+		user1.setCreater("创建人日期");
+		user1.setUpdater("更新人日期");
+		user1.setCreated(new Date());
+		user1.setUpdated(new Date());
 		userService.create(user1);
 		return this.toJson(user1);
 	}

@@ -7,13 +7,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.oecp.myplatform.common.model.StringPKEO;
-
+import com.oecp.myplatform.common.model.BaseEO;
 
 @Entity
 @Table(name = "OECP_USER")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY) 
-public class User extends StringPKEO {
+public class User extends BaseEO {
 	private static final long serialVersionUID = -3715537577598691466L;
 	
 	private String name;

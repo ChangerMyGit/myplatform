@@ -3,21 +3,34 @@ package com.oecp.myplatform.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-/** 
- * 系统日志拦截器 
- * @author changer 
- * @date 2014-04-22
- */ 
-public class LogInterceptor implements HandlerInterceptor{
+import com.oecp.myplatform.common.utils.LogUtils;
+import com.oecp.myplatform.common.utils.SpringUtil;
+import com.oecp.myplatform.service.log.LogSerice;
+
+/**
+ * 系统日志拦截器
+ * 
+ * @author changer
+ * @date 2014-04-29
+ */
+public class LogInterceptor implements HandlerInterceptor {
+
+	private LogSerice logSevive = (LogSerice) SpringUtil
+			.getBean(LogSerice.class);
 
 	@Override
-	public void afterCompletion(HttpServletRequest arg0,
-			HttpServletResponse arg1, Object arg2, Exception arg3)
+	public void afterCompletion(HttpServletRequest request,
+			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
+		String requestUrl = request.getRequestURI();
+		if (StringUtils.endsWith(requestUrl, "/save")
+				|| StringUtils.endsWith(requestUrl, "/delete") || ex != null) {
+			LogUtils.saveLog(request, ex, logSevive);
+		}
 		System.out.println("afterCompletion");
 	}
 
@@ -33,5 +46,5 @@ public class LogInterceptor implements HandlerInterceptor{
 		System.out.println("preHandle");
 		return true;
 	}
-	
+
 }

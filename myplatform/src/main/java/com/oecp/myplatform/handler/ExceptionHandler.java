@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.oecp.myplatform.common.utils.LogUtils;
+import com.oecp.myplatform.common.utils.SpringUtil;
+import com.oecp.myplatform.service.log.LogSerice;
+
 /**
  * 拦截异常
  * @author Changer
@@ -20,11 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class ExceptionHandler implements HandlerExceptionResolver {
 
+	private LogSerice logSevive = (LogSerice) SpringUtil.getBean(LogSerice.class);
+	
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("ex", ex.toString());
+		LogUtils.saveLog(request, ex, logSevive);
 		return new ModelAndView("error", model);
 	}
 
