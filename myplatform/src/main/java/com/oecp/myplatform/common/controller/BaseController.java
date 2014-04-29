@@ -1,5 +1,6 @@
 package com.oecp.myplatform.common.controller;
 
+import javax.persistence.MappedSuperclass;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import com.alibaba.fastjson.JSON;
  * @author Changer
  * @version 2014-4-21
  */
+@MappedSuperclass
 public abstract class BaseController implements ServletContextAware {
 
 	private ServletContext servletContext;
