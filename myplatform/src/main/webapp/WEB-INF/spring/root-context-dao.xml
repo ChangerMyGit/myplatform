@@ -53,6 +53,8 @@
 				<prop key="hibernate.hbm2ddl.auto">${jdbc.hibernate.hbm2ddl.auto}</prop>
 				<prop key="hibernate.use_sql_comments">${jdbc.hibernate.use_sql_comments}</prop>
 				<prop key="hibernate.cache.use_second_level_cache">${jdbc.hibernate.cache.use_second_level_cache}</prop>
+			    <!-- 配置RegionFactory为Ehcache的RegionFactory -->
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.EhCacheRegionFactory</prop>
 			</props>
 		</property>
 	</bean>

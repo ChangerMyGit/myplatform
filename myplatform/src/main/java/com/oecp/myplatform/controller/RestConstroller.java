@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.oecp.myplatform.common.web.BaseController;
+import com.oecp.myplatform.common.controller.BaseController;
 
 @Controller
 @RequestMapping("/test") // 请求路径

@@ -31,8 +31,8 @@
 	<interceptors>
 	    <!-- 全局拦截器 -->
 		<interceptor>
-			<mapping path="/" /><!-- 如果不配置或/*,将拦截所有的Controller -->
-			<beans:bean class="com.oecp.myplatform.interceptor.MyInterceptor" />
+			<mapping path="/**" /><!-- 如果不配置或/**,将拦截所有的Controller  /** 匹配0或者更多的目录 -->
+			<beans:bean class="com.oecp.myplatform.interceptor.LogInterceptor" />
 		</interceptor>
 	</interceptors>
 
