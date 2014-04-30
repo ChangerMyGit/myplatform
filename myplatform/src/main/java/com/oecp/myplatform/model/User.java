@@ -11,7 +11,7 @@ import com.oecp.myplatform.common.model.BaseEO;
 
 @Entity
 @Table(name = "OECP_USER")
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY) 
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE) 
 public class User extends BaseEO {
 	private static final long serialVersionUID = -3715537577598691466L;
 	

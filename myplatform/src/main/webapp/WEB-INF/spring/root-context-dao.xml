@@ -52,9 +52,12 @@
 				<prop key="hibernate.format_sql">${jdbc.hibernate.format_sql}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${jdbc.hibernate.hbm2ddl.auto}</prop>
 				<prop key="hibernate.use_sql_comments">${jdbc.hibernate.use_sql_comments}</prop>
+				<!--  开启二级缓存 -->
 				<prop key="hibernate.cache.use_second_level_cache">${jdbc.hibernate.cache.use_second_level_cache}</prop>
+			    <!-- 开启查询缓存 -->  
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>  
 			    <!-- 配置RegionFactory为Ehcache的RegionFactory -->
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.EhCacheRegionFactory</prop>			    
 			</props>
 		</property>
 	</bean>

@@ -1,5 +1,6 @@
 package com.oecp.myplatform.common.utils;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ public class LogUtils {
 	public static void saveLog(HttpServletRequest request, Exception ex,
 			LogSerice logSevive) {
 		StringBuffer params = new StringBuffer();
+		Date date = new Date();
 		Map map = request.getParameterMap();
 		SysLog log = new SysLog();
 		log.setMethod(request.getMethod());
@@ -23,6 +25,10 @@ public class LogUtils {
 		log.setUserAgent(request.getHeader("user_agent"));
 		log.setType(ex == null ? LogType.TYPE_ACCESS : LogType.EXCEPTION);
 		log.setExceptionMessage(ex != null ? ex.toString() : null);
+		log.setCreated(date);
+		log.setUpdated(date);
+		log.setCreater("System");
+		log.setUpdater("Syetem");
 		logSevive.create(log);
 	}
 }

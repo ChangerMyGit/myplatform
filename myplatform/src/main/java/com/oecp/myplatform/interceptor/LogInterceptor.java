@@ -19,8 +19,7 @@ import com.oecp.myplatform.service.log.LogSerice;
  */
 public class LogInterceptor implements HandlerInterceptor {
 
-	private LogSerice logSevive = (LogSerice) SpringUtil
-			.getBean(LogSerice.class);
+	private LogSerice logSevive = (LogSerice) SpringUtil.getBean(LogSerice.class);
 
 	@Override
 	public void afterCompletion(HttpServletRequest request,
@@ -31,19 +30,19 @@ public class LogInterceptor implements HandlerInterceptor {
 				|| StringUtils.endsWith(requestUrl, "/delete") || ex != null) {
 			LogUtils.saveLog(request, ex, logSevive);
 		}
-		System.out.println("afterCompletion");
+		//System.out.println("afterCompletion");
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1,
 			Object arg2, ModelAndView arg3) throws Exception {
-		System.out.println("postHandle");
+		//System.out.println("postHandle");
 	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1,
 			Object arg2) throws Exception {
-		System.out.println("preHandle");
+		//System.out.println("preHandle");
 		return true;
 	}
 

@@ -6,7 +6,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import com.oecp.myplatform.common.enums.LogType;
-import com.oecp.myplatform.common.model.StringPKEO;
+import com.oecp.myplatform.common.model.BaseEO;
 
 /**
  * 系统日志
@@ -16,7 +16,7 @@ import com.oecp.myplatform.common.model.StringPKEO;
  */
 @Table(name = "sys_log")
 @Entity
-public class SysLog extends StringPKEO {
+public class SysLog extends BaseEO {
 	private static final long serialVersionUID = 1130768567358545545L;
 	private String remoteAddr;
 	private String requertUrl;
