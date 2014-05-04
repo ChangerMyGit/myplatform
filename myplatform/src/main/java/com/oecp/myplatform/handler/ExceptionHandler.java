@@ -30,6 +30,7 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		ex.printStackTrace();
 		model.put("ex", ex.toString());
 		LogUtils.saveLog(request, ex, logSevive);
 		return new ModelAndView("error", model);

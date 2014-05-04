@@ -7,6 +7,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,7 @@ import com.oecp.myplatform.common.service.BaseService;
  * @version 2014-4-21
  */
 @MappedSuperclass
-public abstract class BaseController implements ServletContextAware {
+public abstract class BaseController<T extends BaseEO> implements ServletContextAware {
 
 	private ServletContext servletContext;
 
@@ -83,7 +84,7 @@ public abstract class BaseController implements ServletContextAware {
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public <T extends BaseEO> String save(@RequestParam T entity){
+	public String save(@ModelAttribute T entity) {
 		getService().create(entity);
 		return toJson(entity);
 	}
@@ -94,7 +95,7 @@ public abstract class BaseController implements ServletContextAware {
 	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String delete(@RequestParam Serializable entityid){
+	public String delete(@RequestParam Serializable entityid) {
 		getService().delete(entityid);
 		return "Delete Success!";
 	}
@@ -105,10 +106,19 @@ public abstract class BaseController implements ServletContextAware {
 	 */
 	@RequestMapping(value = "/find", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public <T extends BaseEO> String find(@RequestParam Serializable entityid){
+	public <T extends BaseEO> String find(@RequestParam Serializable entityid) {
 		T t = getService().find(entityid);
 		return toJson(t);
 	}
 	
-	
+	/**
+	 * 日期属性转换
+	 * @param binder
+	 
+	@InitBinder   
+    public void initBinder(WebDataBinder binder) {   
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");   
+        dateFormat.setLenient(true);   
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));   
+    }  */
 }
