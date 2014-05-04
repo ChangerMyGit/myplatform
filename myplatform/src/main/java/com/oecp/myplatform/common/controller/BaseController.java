@@ -1,15 +1,23 @@
 package com.oecp.myplatform.common.controller;
 
+import java.io.Serializable;
+
 import javax.persistence.MappedSuperclass;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
+import com.oecp.myplatform.common.model.BaseEO;
+import com.oecp.myplatform.common.service.BaseService;
 
 /**
  * 控制器支持类
@@ -21,6 +29,8 @@ public abstract class BaseController implements ServletContextAware {
 
 	private ServletContext servletContext;
 
+	protected abstract BaseService getService();
+	
 	protected String jsonString;
 	
 	protected String toJson(Object obj) {
@@ -67,5 +77,38 @@ public abstract class BaseController implements ServletContextAware {
 	public void setJsonString(String jsonString) {
 		this.jsonString = jsonString;
 	}
+	
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = "/save", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public <T extends BaseEO> String save(@RequestParam T entity){
+		getService().create(entity);
+		return toJson(entity);
+	}
+	
+	/**
+	 * @param entityid
+	 * @return
+	 */
+	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String delete(@RequestParam Serializable entityid){
+		getService().delete(entityid);
+		return "Delete Success!";
+	}
+	
+	/**
+	 * @param entityid
+	 * @return
+	 */
+	@RequestMapping(value = "/find", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public <T extends BaseEO> String find(@RequestParam Serializable entityid){
+		T t = getService().find(entityid);
+		return toJson(t);
+	}
+	
 	
 }

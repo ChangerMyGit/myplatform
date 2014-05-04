@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oecp.myplatform.common.controller.BaseController;
+import com.oecp.myplatform.common.service.BaseService;
 import com.oecp.myplatform.model.User;
 import com.oecp.myplatform.service.UserService;
 
@@ -92,5 +93,10 @@ public class TestController extends BaseController {
 		params.add("%更新人%");
 		List result = userService.findByCondition(" o.creater like ? and o.updater like ? ", params, 0, 100);
 		return this.toJson(result);
+	}
+
+	@Override
+	protected BaseService getService() {
+		return userService;
 	}
 }
