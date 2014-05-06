@@ -62,6 +62,20 @@ public abstract class BaseService {
 		return (T) getDao().find(getEntityClass(), entityId);
 	}
 	
+	public boolean isExitedByCondition(String whereSql,List params){
+		long count = getCountByCondition(whereSql,params);
+		return count > 0;
+	}
+	
+	public Long getCountByCondition(String whereSql,List params){
+		StringBuffer sql = new StringBuffer(100);
+		sql.append("select count(o) from ").append(getEntityClass().getName()).append(" o where 1=1 and ");
+		sql.append(whereSql);
+		Query query = getDao().getHibernateSession().createQuery(sql.toString());
+		setQueryParams(params, query);
+		return (Long) query.uniqueResult();
+	}
+	
 	// 默认使用占位符查询
 	public <T> List<T> findByCondition(String whereSql,List params){
 		return findByCondition(whereSql,params,-1,-1);
@@ -99,6 +113,5 @@ public abstract class BaseService {
 				}
 			}
 		}
-
 	}
 }

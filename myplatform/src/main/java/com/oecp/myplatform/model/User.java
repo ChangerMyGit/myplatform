@@ -15,21 +15,23 @@ import com.oecp.myplatform.common.model.BaseEO;
 public class User extends BaseEO {
 	private static final long serialVersionUID = -3715537577598691466L;
 	
-	private String name;
+	private String userName;
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
+	private String password;
+
+	public String getUserName() {
+		return userName;
 	}
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

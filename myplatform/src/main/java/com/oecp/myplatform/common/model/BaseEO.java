@@ -11,7 +11,7 @@ public class BaseEO extends StringPKEO {
 	private static final long serialVersionUID = 6692445484291756337L;
 
 	private String creater;
-	@DateTimeFormat(pattern="yyyy-MM-dd")  
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
 	private Date created;
 	private String updater;
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  

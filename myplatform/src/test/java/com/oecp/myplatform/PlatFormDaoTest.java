@@ -23,7 +23,7 @@ public class PlatFormDaoTest extends AbstractJUnit4SpringContextTests{
 	public void saveTest(){
     	UserDao userDao = (UserDao) ctx.getBean("userDao");
     	User user = new User();
-    	user.setName("changer");
+    	user.setUserName("changer");
     	user.setCreater("changer");
     	user.setUpdater("changer");
     	userDao.create(user);
