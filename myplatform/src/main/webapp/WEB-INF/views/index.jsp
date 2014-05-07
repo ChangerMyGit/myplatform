@@ -36,17 +36,17 @@
 		lines : true,
 		onClick : function(node) {
 			if (node.attributes) {
-				Open(node.text, node.attributes.url);
+				open(node.text, node.attributes.url);
 			}
 		}
 	});
 	
 	//在右边center区域打开菜单，新增tab
-    function Open(text, url) {
+    function open(text, url) {
         if ($("#tabs").tabs('exists', text)) {
             $('#tabs').tabs('select', text);
         } else {
-        	url = "${pageContext.request.contextPath}" + url; 
+        	url = ctx + url; 
         	var content = '<iframe scrolling="no" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';  
             $('#tabs').tabs('add', {
                 title : text,

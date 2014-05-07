@@ -7,6 +7,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,10 +29,12 @@ import com.oecp.myplatform.common.service.BaseService;
  * @version 2014-4-21
  */
 @MappedSuperclass
-public abstract class BaseController<T extends BaseEO> implements ServletContextAware {
+public abstract class BaseController<T extends BaseEO> implements ServletContextAware ,ApplicationContextAware {
 
 	private ServletContext servletContext;
 
+	private static ApplicationContext ctx;  
+	
 	protected abstract BaseService getService();
 	
 	protected String jsonString;
@@ -110,6 +115,11 @@ public abstract class BaseController<T extends BaseEO> implements ServletContext
 		T t = getService().find(entityid);
 		return toJson(t);
 	}
+	
+	@Override  
+    public void setApplicationContext(ApplicationContext applicationContext ) throws BeansException {  
+        ctx = applicationContext;  
+    }  
 	
 	/**
 	 * 日期属性转换
