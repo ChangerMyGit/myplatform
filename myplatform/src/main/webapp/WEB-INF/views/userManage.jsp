@@ -15,6 +15,56 @@
 			<table id="tt"></table>
 		</div>
 	</div>
+
+	<div id="dlg" class="easyui-dialog"
+		style="width: 400px; height: 280px; padding: 10px 20px" closed="true"
+		buttons="#dlg-buttons">
+		<div class="ftitle">User Information</div>
+		<form id="fm" method="post" novalidate>
+			<div class="fitem">
+				<label>用户名:</label> <input name="userName"
+					class="easyui-validatebox" required="true">
+					<input name="id" hidden = "true">
+			</div>
+			<div class="fitem">
+				<label>密码:</label> <input name="password" type="password"
+					class="easyui-validatebox" required="true">
+			</div>
+			<div class="fitem">
+				<label>邮箱:</label> <input name="email" class="easyui-validatebox"
+					validType="email">
+			</div>
+		</form>
+	</div>
+	<div id="dlg-buttons">
+		<a href="javascript:void(0)" class="easyui-linkbutton"
+			iconCls="icon-ok" onclick="saveUser()">Save</a> <a
+			href="javascript:void(0)" class="easyui-linkbutton"
+			iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+	</div>
+	<style type="text/css">
+#fm {
+	margin: 0;
+	padding: 10px 30px;
+}
+
+.ftitle {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 5px 0;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.fitem {
+	margin-bottom: 5px;
+}
+
+.fitem label {
+	display: inline-block;
+	width: 80px;
+}
+</style>
 </body>
 <script type="text/javascript">
 	$('#tt').datagrid({
@@ -27,10 +77,16 @@
 		striped : true,//显示条纹
 		pageSize : 20,//每页记录数
 		singleSelect : false,//单选模式
+		selectOnCheck : true,
+		checkOnSelect : true,
 		rownumbers : true,//显示行数
 		columns : [ [ {
+			field : "ck",
+			checkbox : true
+		}, {
 			field : 'id',
-			title : 'ID'
+			title : 'ID',
+			hidden : true
 		}, {
 			field : 'userName',
 			title : '用户名',
@@ -38,7 +94,12 @@
 			align : 'center'
 		}, {
 			field : 'password',
-			title : '密码'
+			title : '密码',
+			hidden : true
+		}, {
+			field : 'email',
+			title : '邮箱',
+			width : 180,
 		}, {
 			field : 'created',
 			title : '创建时间',
@@ -49,7 +110,7 @@
 			title : '创建人',
 			width : 100,
 			align : 'center'
-		} , {
+		}, {
 			field : 'updater',
 			title : '更新人',
 			width : 100,
@@ -59,26 +120,105 @@
 			title : '更新时间',
 			width : 100,
 			align : 'center'
-		}] ],
+		} ] ],
 		toolbar : [ {
 			text : '添加',
 			iconCls : 'icon-add',
 			handler : function() {
-				openDialog("add_dialog", "add");
+				addUser();
 			}
 		}, '-', {
 			text : '修改',
 			iconCls : 'icon-edit',
 			handler : function() {
-				openDialog("add_dialog", "edit");
+				editUser();
 			}
 		}, '-', {
 			text : '删除',
 			iconCls : 'icon-remove',
 			handler : function() {
-				delAppInfo();
+				deleteUser();
 			}
 		} ]
 	});
+	var url;
+	function addUser() {
+		$('#dlg').dialog('open').dialog('setTitle', "新增用户");
+		$('#fm').form('clear');
+		url = ctx + "/user/save";
+	}
+
+
+	function editUser() {
+		var row = $('#tt').datagrid('getSelected');
+		if (row) {
+			$('#dlg').dialog('open').dialog('setTitle', '修改用户');
+			$('#fm').form('load', row);
+			url = ctx + "/user/save";
+		} else {
+			$.messager.show({
+				title : '提示',
+				msg : "请选择一条记录！"
+			});
+			return;
+		}
+	}
+
+	function saveUser() {
+		$('#fm').form('submit', {
+			url : url,
+			onSubmit : function() {
+				return $(this).form('validate');
+			},
+			success : function(result) {
+				var result = eval('(' + result + ')');
+				if (result.success) {
+					$('#dlg').dialog('close'); // close the dialog
+					$('#tt').datagrid('reload'); // reload the user data
+				} else {
+					$.messager.show({
+						title : 'Error',
+						msg : result.errorMsg
+					});
+				}
+			}
+		});
+	}
+
+	function deleteUser() {
+		var rows = $('#tt').datagrid('getSelections');
+		if (rows.length == 0) {
+			$.messager.show({
+				title : '提示',
+				msg : "请选择一条记录！"
+			});
+			return;
+		}
+		if (rows || rows.length != 0) {
+			$.messager.confirm('Confirm', '确认删除该用户?', function(r) {
+				if (r) {
+					var params = new Array();
+					for (var i = 0; i < rows.length; i++) {
+						params.push(rows[i].id);
+					}
+
+					$.ajax({
+						url : ctx + "/user/deletes",
+						type : "post",
+						data : {
+							entityids : params
+						},
+						dataType : "json",
+						success : function(result) {
+							if (result.success) {
+								// reload the user data
+								$('#tt').datagrid('reload');
+							}
+						}
+					});
+				}
+			});
+		}
+	}
 </script>
 </html>

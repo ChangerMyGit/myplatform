@@ -1,6 +1,7 @@
 package com.oecp.myplatform.common.controller;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.persistence.MappedSuperclass;
 import javax.servlet.ServletContext;
@@ -40,11 +41,13 @@ public abstract class BaseController<T extends BaseEO> implements ServletContext
 	protected String jsonString;
 	
 	protected String toJson(Object obj) {
+		//JsonResult result = new JsonResult(obj);
 		this.jsonString = JSON.toJSONStringWithDateFormat(obj, "yyyy-MM-dd");
 		return jsonString;
 	}
 	
 	protected String toJson(Object obj,String dateFormat) {
+		//JsonResult result = new JsonResult(obj);
 		this.jsonString = JSON.toJSONStringWithDateFormat(obj, dateFormat);
 		return jsonString;
 	}
@@ -87,22 +90,34 @@ public abstract class BaseController<T extends BaseEO> implements ServletContext
 	/**
 	 * @return
 	 */
-	@RequestMapping(value = "/save", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String save(@ModelAttribute T entity) {
-		getService().create(entity);
-		return toJson(entity);
+		if (entity.getId() == null) {
+			getService().create(entity);
+		} else {
+			getService().update(entity);
+		}
+		return toJson(new JsonResult(entity));
 	}
 	
 	/**
 	 * @param entityid
 	 * @return
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String delete(@RequestParam Serializable entityid) {
 		getService().delete(entityid);
-		return "Delete Success!";
+		return toJson(new JsonResult(null));
+	}
+	
+	@RequestMapping(value = "/deletes", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String delete(@RequestParam(value = "entityids[]") String[] entityids) {
+		//String [] entityids = getRequest().getParameterValues("entityids[]");
+		getService().delete(entityids);
+		return toJson(new JsonResult(null));
 	}
 	
 	/**
