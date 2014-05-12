@@ -17,9 +17,9 @@
 	</div>
 
 	<div id="dlg" class="easyui-dialog"
-		style="width: 400px; height: 280px; padding: 10px 20px" closed="true"
+		style="width: 400px; height: 280px; padding: 10px 20px"  closed="true"
 		buttons="#dlg-buttons">
-		<div class="ftitle">User Information</div>
+		<div class="ftitle">用户信息</div>
 		<form id="fm" method="post" novalidate>
 			<div class="fitem">
 				<label>用户名:</label> <input name="userName"
@@ -42,30 +42,30 @@
 			href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
 	</div>
-	<style type="text/css">
-#fm {
-	margin: 0;
-	padding: 10px 30px;
-}
-
-.ftitle {
-	font-size: 14px;
-	font-weight: bold;
-	padding: 5px 0;
-	margin-bottom: 10px;
-	border-bottom: 1px solid #ccc;
-}
-
-.fitem {
-	margin-bottom: 5px;
-}
-
-.fitem label {
-	display: inline-block;
-	width: 80px;
-}
-</style>
 </body>
+<style type="text/css">
+		#fm {
+			margin: 0;
+			padding: 10px 30px;
+		}
+		
+		.ftitle {
+			font-size: 14px;
+			font-weight: bold;
+			padding: 5px 0;
+			margin-bottom: 10px;
+			border-bottom: 1px solid #ccc;
+		}
+		
+		.fitem {
+			margin-bottom: 5px;
+		}
+		
+		.fitem label {
+			display: inline-block;
+			width: 80px;
+		}
+</style>
 <script type="text/javascript">
 	$('#tt').datagrid({
 		method : "GET",

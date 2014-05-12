@@ -1,5 +1,8 @@
 package com.oecp.myplatform.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +27,11 @@ public class FunctionService extends BaseService {
 		return FunctionNode.class;
 	}
 
+	public void deleteFunction(String functionid){
+		List params = new ArrayList();
+		params.add(functionid);
+		// 首先删除子节点
+		this.deleteByCondition(" o.parent.id = ?", params);
+		this.delete(functionid);
+	}
 }

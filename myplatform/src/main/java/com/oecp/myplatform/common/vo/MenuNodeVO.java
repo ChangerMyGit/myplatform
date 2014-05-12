@@ -15,6 +15,8 @@ public class MenuNodeVO implements Serializable {
 	private String text;
 	private String id;
     private String state;
+    private String url;
+    private String parentId;
 	private Map attributes;
 	private List<MenuNodeVO> children;
 
@@ -56,6 +58,22 @@ public class MenuNodeVO implements Serializable {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 }

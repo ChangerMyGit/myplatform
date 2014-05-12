@@ -1,7 +1,7 @@
 package com.oecp.myplatform.common.controller;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 
 import javax.persistence.MappedSuperclass;
 import javax.servlet.ServletContext;
@@ -129,6 +129,13 @@ public abstract class BaseController<T extends BaseEO> implements ServletContext
 	public <T extends BaseEO> String find(@RequestParam Serializable entityid) {
 		T t = getService().find(entityid);
 		return toJson(t);
+	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String list(@RequestParam int page,@RequestParam int rows){
+		List result = getService().findByCondition(" 1=1", null, (page-1)*rows, rows);
+		return toJson(result);
 	}
 	
 	@Override  
