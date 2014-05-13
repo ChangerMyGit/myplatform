@@ -12,7 +12,45 @@
 		style="margin: 0px; border: 0px; overflow: hidden; width: 100%; height: 100%;">
 		<div data-options="region:'center',split:false,border:false"
 			style="padding: 0px; height: 100%; width: 100%; overflow-y: hidden;">
-			<table id="tt"></table>
+			<table id="tt" class="easyui-datagrid"
+				data-options=" method : 'GET',url : ctx + '/user/list',
+			       fit : true,pagination : true, pagePosition : 'bottom', 
+			       fitColumns : false, striped : true, 
+			       pageSize : 20, singleSelect : false, selectOnCheck : true,
+			       checkOnSelect : true, rownumbers : true,
+			       toolbar: [{
+					text:'新增',
+					iconCls:'icon-add',
+					handler:function(){
+						addUser();
+					}
+					},{
+						text:'编辑',
+						iconCls:'icon-save',
+						handler:function(){
+							editUser();
+						}
+					},{
+						text:'删除',
+						iconCls : 'icon-remove',
+						handler : function() {
+							deleteUser();
+						}
+					}]">
+				<thead>
+					<tr>
+						<th data-options="field : 'ck',checkbox : true">功能名称</th>
+						<th data-options="field : 'id',hidden : true">ID</th>
+						<th data-options="field : 'userName',align : 'center'" width="100">用户名</th>
+						<th data-options="field : 'password',hidden : true">密码</th>
+						<th data-options="field : 'email'">邮箱</th>
+						<th data-options="field : 'created',width : 100,align : 'center'">创建时间</th>
+						<th data-options="field : 'creater',width : 100,align : 'center'">创建人</th>
+						<th data-options="field : 'updated',width : 100,align : 'center'">更新时间</th>
+						<th data-options="field : 'updater',width : 100,align : 'center'">更新人</th>
+					</tr>
+				</thead>
+			</table>
 		</div>
 	</div>
 
@@ -42,7 +80,6 @@
 			href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
 	</div>
-</body>
 <style type="text/css">
 		#fm {
 			margin: 0;
@@ -67,7 +104,7 @@
 		}
 </style>
 <script type="text/javascript">
-	$('#tt').datagrid({
+/* 	$('#tt').datagrid({
 		method : "GET",
 		url : ctx + "/user/list",
 		fit : true,
@@ -140,7 +177,7 @@
 				deleteUser();
 			}
 		} ]
-	});
+	}); */
 	var url;
 	function addUser() {
 		$('#dlg').dialog('open').dialog('setTitle', "新增用户");
@@ -150,10 +187,11 @@
 
 
 	function editUser() {
-		var row = $('#tt').datagrid('getSelected');
-		if (row) {
+		var rows = $('#tt').datagrid('getSelections');
+		// alert(row.id + "/" + row.userName);
+		if (rows && rows.length == 1) {
+			$('#fm').form('load', rows[0]);
 			$('#dlg').dialog('open').dialog('setTitle', '修改用户');
-			$('#fm').form('load', row);
 			url = ctx + "/user/save";
 		} else {
 			$.messager.show({
@@ -221,4 +259,5 @@
 		}
 	}
 </script>
+</body>
 </html>

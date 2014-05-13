@@ -81,6 +81,7 @@ public class FunctionController extends BaseController<FunctionNode>{
 		MenuNodeVO menu = new MenuNodeVO();
 		menu.setId(node.getId());
 		menu.setText(node.getText());
+		menu.setSeqNo(node.getSeqNo());
 		if(node.getParent()!=null){
 			menu.setParentId(node.getParent().getId());
 		}

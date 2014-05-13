@@ -51,7 +51,8 @@
             $('#tabs').tabs('add', {
                 title : text,
                 closable : true,
-                content : content 
+                // href : url 
+                content:content
             });
         }
     }

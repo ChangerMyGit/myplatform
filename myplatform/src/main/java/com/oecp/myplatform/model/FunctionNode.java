@@ -27,6 +27,7 @@ public class FunctionNode extends BaseEO {
 	private List<FunctionNode> children;
 	private FunctionNode parent;
 	private String url;
+	private int seqNo;
 	@Transient
     private String parentid;
 	 
@@ -70,6 +71,14 @@ public class FunctionNode extends BaseEO {
 
 	public void setParentid(String parentid) {
 		this.parentid = parentid;
+	}
+
+	public int getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(int seqNo) {
+		this.seqNo = seqNo;
 	}
 
 }
