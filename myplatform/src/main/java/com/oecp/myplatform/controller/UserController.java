@@ -29,13 +29,6 @@ public class UserController extends BaseController<User> {
 	@Autowired
 	private UserService userService;
 	
-/*	@RequestMapping(value = "/list", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
-	@ResponseBody
-	public String list(){
-		List users = userService.findByCondition(" 1 = 1", null);
-		return toJson(users);
-	}*/
-	
 	@RequestMapping(value = "/manage", method = RequestMethod.GET)
 	public String userManage(){
 		return "userManage";

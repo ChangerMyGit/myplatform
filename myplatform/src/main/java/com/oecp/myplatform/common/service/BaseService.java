@@ -51,7 +51,7 @@ public abstract class BaseService {
 	
 	public void deleteByCondition(String whereSql,List params){
 		StringBuffer sql = new StringBuffer(100);
-		sql.append("delete from ").append(getEntityClass().getName()).append(" o where 1=1 and ");
+		sql.append("delete from ").append(getEntityClass().getName()).append(" o where 1=1 ");
 		sql.append(whereSql);
 		Query query = getDao().getHibernateSession().createQuery(sql.toString());
 		setQueryParams(params, query);
@@ -69,7 +69,7 @@ public abstract class BaseService {
 	
 	public Long getCountByCondition(String whereSql,List params){
 		StringBuffer sql = new StringBuffer(100);
-		sql.append("select count(o) from ").append(getEntityClass().getName()).append(" o where 1=1 and ");
+		sql.append("select count(o) from ").append(getEntityClass().getName()).append(" o where 1=1 ");
 		sql.append(whereSql);
 		Query query = getDao().getHibernateSession().createQuery(sql.toString());
 		setQueryParams(params, query);
@@ -85,7 +85,7 @@ public abstract class BaseService {
 	public <T> List<T> findByCondition(String whereSql, List params,
 			int startRow, int rows) {
 		StringBuffer sql = new StringBuffer(100);
-		sql.append("select o from ").append(getEntityClass().getName()).append(" o where 1=1 and ");
+		sql.append("select o from ").append(getEntityClass().getName()).append(" o where 1=1 ");
 		sql.append(whereSql);
 		Query query = getDao().getHibernateSession().createQuery(sql.toString());
 		setQueryParams(params, query);

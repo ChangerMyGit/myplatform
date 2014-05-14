@@ -38,7 +38,7 @@ public class FunctionController extends BaseController<FunctionNode>{
 	@RequestMapping(value = "/getMenu", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String getTreeMenu() {
-		List<FunctionNode> nodes = functionService.findByCondition(" o.parent is null ", null);
+		List<FunctionNode> nodes = functionService.findByCondition(" and o.parent is null ", null);
 		List<MenuNodeVO> result = new ArrayList<MenuNodeVO>();
 		for (FunctionNode node : nodes) {
 			MenuNodeVO menu = buildMenuNode(node);

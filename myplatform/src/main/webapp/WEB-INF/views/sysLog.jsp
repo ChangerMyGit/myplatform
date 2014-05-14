@@ -7,6 +7,15 @@
 <title>日志管理</title>
 </head>
 <body>
+	<!-- 
+	    ,toolbar: [{
+				text:'删除',
+				iconCls : 'icon-remove',
+				handler : function() {
+					deleteLog();
+				}
+		}]
+    -->
 	<div class="easyui-layout" fit="true"
 		style="margin: 0px; border: 0px; overflow: hidden; width: 100%; height: 100%;">
 		<div data-options="region:'center',split:false,border:false"
@@ -16,20 +25,13 @@
 			       fit : true,pagination : true, pagePosition : 'bottom', 
 			       fitColumns : false, striped : true, 
 			       pageSize : 20, singleSelect : false, selectOnCheck : true,
-			       checkOnSelect : true, rownumbers : true,
-			       toolbar: [{
-						text:'删除',
-						iconCls : 'icon-remove',
-						handler : function() {
-							deleteLog();
-						}
-					}]">
+			       checkOnSelect : true, rownumbers : true" toolbar="#tb" >
 				<thead>
 					<tr>
 						<th data-options="field : 'ck',checkbox : true"></th>
 						<th data-options="field : 'id',hidden : true">ID</th>
 						<th data-options="field : 'remoteAddr',align : 'center'"width="100">请求地址</th>
-						<th data-options="field : 'requertUrl',hidden : true">请求Url路径</th>
+						<th data-options="field : 'requertUrl'">请求Url路径</th>
 						<th data-options="field : 'method'">方法</th>
 						<th data-options="field : 'params'" width="700">参数</th>
 						<th data-options="field : 'typeValue',width : 100">日志类型</th>
@@ -37,6 +39,15 @@
 				</thead>
 			</table>
 		</div>
+	</div>
+
+	<div id="tb">
+		<span>请求路径:</span> 
+		<input id="requertUrl" style="line-height: 35px; border: 1px solid #ccc"> 
+		<span>参数:</span> 
+		<input id="params" style="line-height: 35px; border: 1px solid #ccc"> 
+		<a href="#" class="easyui-linkbutton" iconCls= "icon-search" onclick="doSearch()">Search</a>
+		<a href="#" class="easyui-linkbutton" iconCls= "icon-remove" onclick="deleteLog()">删除</a>
 	</div>
 </body>
 <script type="text/javascript">
@@ -74,6 +85,14 @@
 				}
 			});
 		}
+	}
+	
+
+	function doSearch() {
+		$('#logTable').datagrid('load', {
+			requertUrl : $('#requertUrl').val(),
+			params : $('#params').val()
+		});
 	}
 </script>
 </html>

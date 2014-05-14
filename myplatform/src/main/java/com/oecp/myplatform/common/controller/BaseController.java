@@ -1,6 +1,8 @@
 package com.oecp.myplatform.common.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,8 +138,18 @@ public abstract class BaseController<T extends BaseEO> implements ServletContext
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String list(@RequestParam int page,@RequestParam int rows){
-		List result = getService().findByCondition(" 1=1 ", null, (page-1)*rows, rows);
-		Long total = getService().getCountByCondition(" 1=1 ", null);
+		StringBuffer whereSql = new StringBuffer();
+		List paramsList = new ArrayList();
+		Enumeration enu = getRequest().getParameterNames();
+		while(enu.hasMoreElements()){
+			String paramName = (String) enu.nextElement();
+			if(!paramName.equals("page") && !paramName.equals("rows")){
+				whereSql.append(" and o.").append(paramName).append(" like ? ");
+				paramsList.add("%" + getRequest().getParameter(paramName) + "%");
+			}
+		}
+		List result = getService().findByCondition(whereSql.toString(), paramsList, (page-1)*rows, rows);
+		Long total = getService().getCountByCondition(whereSql.toString(), paramsList);
 	    Map map = new HashMap();
 	    map.put("total", total);
 	    map.put("rows", result);

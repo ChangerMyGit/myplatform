@@ -64,7 +64,7 @@ public class TestController extends BaseController<User> {
 		List params = new ArrayList();
 		params.add("创建人");
 		params.add("更新人");
-		userService.deleteByCondition(" o.creater = ? and o.updater = ? ",params);
+		userService.deleteByCondition(" and o.creater = ? and o.updater = ? ",params);
 		return "DeleteWhere Success!";
 	}
 
@@ -74,7 +74,7 @@ public class TestController extends BaseController<User> {
 		List params = new ArrayList();
 		params.add("%创建人%");
 		params.add("%更新人%");
-		List result = userService.findByCondition(" o.creater like ? and o.updater like ? ", params, 0, 100);
+		List result = userService.findByCondition(" and o.creater like ? and o.updater like ? ", params, 0, 100);
 		return this.toJson(result);
 	}
 	
