@@ -1,7 +1,9 @@
 package com.oecp.myplatform.common.controller;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.MappedSuperclass;
 import javax.servlet.ServletContext;
@@ -47,7 +49,7 @@ public abstract class BaseController<T extends BaseEO> implements ServletContext
 	}
 	
 	protected String toJson(Object obj,String dateFormat) {
-		//JsonResult result = new JsonResult(obj);
+		// JsonResult result = new JsonResult(obj);
 		this.jsonString = JSON.toJSONStringWithDateFormat(obj, dateFormat);
 		return jsonString;
 	}
@@ -134,8 +136,12 @@ public abstract class BaseController<T extends BaseEO> implements ServletContext
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String list(@RequestParam int page,@RequestParam int rows){
-		List result = getService().findByCondition(" 1=1", null, (page-1)*rows, rows);
-		return toJson(result);
+		List result = getService().findByCondition(" 1=1 ", null, (page-1)*rows, rows);
+		Long total = getService().getCountByCondition(" 1=1 ", null);
+	    Map map = new HashMap();
+	    map.put("total", total);
+	    map.put("rows", result);
+		return toJson(map);
 	}
 	
 	@Override  

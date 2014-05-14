@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.oecp.myplatform.common.utils.LogUtils;
 import com.oecp.myplatform.common.utils.SpringUtil;
-import com.oecp.myplatform.service.log.LogSerice;
+import com.oecp.myplatform.service.log.LogService;
 
 /**
  * 拦截异常
@@ -24,7 +24,7 @@ import com.oecp.myplatform.service.log.LogSerice;
 @Component
 public class ExceptionHandler implements HandlerExceptionResolver {
 
-	private LogSerice logSevive = (LogSerice) SpringUtil.getBean(LogSerice.class);
+	private LogService logSevive = (LogService) SpringUtil.getBean(LogService.class);
 	
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request,

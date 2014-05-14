@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.oecp.myplatform.common.utils.LogUtils;
 import com.oecp.myplatform.common.utils.SpringUtil;
-import com.oecp.myplatform.service.log.LogSerice;
+import com.oecp.myplatform.service.log.LogService;
 
 /**
  * 系统日志拦截器
@@ -19,7 +19,7 @@ import com.oecp.myplatform.service.log.LogSerice;
  */
 public class LogInterceptor implements HandlerInterceptor {
 
-	private LogSerice logSevive = (LogSerice) SpringUtil.getBean(LogSerice.class);
+	private LogService logSevive = (LogService) SpringUtil.getBean(LogService.class);
 
 	@Override
 	public void afterCompletion(HttpServletRequest request,

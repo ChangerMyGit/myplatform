@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.oecp.myplatform.common.enums.LogType;
 import com.oecp.myplatform.common.model.BaseEO;
@@ -25,6 +26,8 @@ public class SysLog extends BaseEO {
 	private String exceptionMessage;
 	private String userAgent;
     private LogType type;
+    @Transient
+    private String typeValue;
 	
 	public String getRemoteAddr() {
 		return remoteAddr;
@@ -81,6 +84,17 @@ public class SysLog extends BaseEO {
 
 	public void setType(LogType type) {
 		this.type = type;
+	}
+
+	public String getTypeValue() {
+		if (getType().equals(LogType.TYPE_ACCESS))
+			return "操作日志";
+		else
+			return "异常日志";
+	}
+
+	public void setTypeValue(String typeValue) {
+		this.typeValue = typeValue;
 	}
 
 }

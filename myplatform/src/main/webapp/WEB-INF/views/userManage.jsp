@@ -233,7 +233,7 @@
 			return;
 		}
 		if (rows || rows.length != 0) {
-			$.messager.confirm('Confirm', '确认删除该用户?', function(r) {
+			$.messager.confirm('Confirm', '确认删除?', function(r) {
 				if (r) {
 					var params = new Array();
 					for (var i = 0; i < rows.length; i++) {

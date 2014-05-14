@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import com.alibaba.fastjson.JSON;
 import com.oecp.myplatform.common.enums.LogType;
 import com.oecp.myplatform.model.log.SysLog;
-import com.oecp.myplatform.service.log.LogSerice;
+import com.oecp.myplatform.service.log.LogService;
 
 public class LogUtils {
 	// 保存日志
 	public static void saveLog(HttpServletRequest request, Exception ex,
-			LogSerice logSevive) {
+			LogService logSevive) {
 		StringBuffer params = new StringBuffer();
 		Date date = new Date();
 		Map map = request.getParameterMap();

@@ -9,7 +9,7 @@ import com.oecp.myplatform.dao.log.LogDao;
 import com.oecp.myplatform.model.log.SysLog;
 
 @Service
-public class LogSerice extends BaseService {
+public class LogService extends BaseService {
 
 	@Autowired
 	private LogDao logdao;
